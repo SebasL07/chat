@@ -1,0 +1,30 @@
+/* Estilos generales */
+.chat-container {
+    padding: 1rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Tema claro */
+.chat-container.light {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Tema oscuro */
+.chat-container.dark {
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+}
+
+/* Ejemplo de estilos adicionales para el tema oscuro */
+.chat-container.dark .messages-container {
+    background-color: #2e2e2e;
+    border-color: #444;
+}
+
+.chat-container.dark .input-container input,
+.chat-container.dark .input-container button {
+    background-color: #333;
+    color: #f5f5f5;
+    border-color: #555;
+}

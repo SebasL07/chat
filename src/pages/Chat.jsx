@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import stompService from "../utils/SocketService";
-import Message from "./Message";
+import Message from "../components/Message";
+import "./static/Chat.css";
+
 
 const Chat = () =>{
     const [messages,setMessages] = useState([]);
@@ -9,6 +11,7 @@ const Chat = () =>{
     const [sender, setSender] = useState('');
     const [to, setTo] = useState('');
 
+    const { isDarkMode, toggleTheme } = useTheme();
     useEffect(() => {
         stompService.subscribe(`/messageTo/${to}`, (newM) =>{
             console.log(newM);
@@ -46,38 +49,49 @@ const Chat = () =>{
         .then((data) => console.log("Mensaje guardado:", data))
         .catch((error) => console.error("Error al guardar el mensaje:", error));
         
-
-
-       
     }
 
     const handleMessage = (e) => {  
         setMessage(e.target.value)
     }
     return (
+        <div className={`chat-container ${isDarkMode ? "dark" : "light"}`}>
 
-        <>
-            <div>
-                <h1>Chat</h1>
-                
-                <input type="text" name="textSender" id="idTextSender" placeholder="From..." value={sender} onChange={(e) => {setSender(e.target.value)}}/>
-
-                <input type="text" name="textTo" id="idTextTo" placeholder="To..." value={to} onChange={(e) => {setTo(e.target.value)}}/>
-
-                <input type="text" name="textMessage" id="idTextMsg" placeholder="Message..." value={message} onChange={(e) => handleMessage(e)}/>
-
-                <button onClick={(e)=> handleSend(e)}>Enviar</button>
+            <button onClick={toggleTheme}>
+                {isDarkMode ? "Modo Claro" : "Modo Noche"}
+            </button>
+            <div className="messages-container">
+                {messages.map((m, index) => (
+                    <div
+                        key={index}
+                        className={m.sender === sender ? "message-sender" : "message-receiver"}
+                    >
+                        <Message message={m} />
+                    </div>
+                ))}
             </div>
-            <div>
-                <h1>Mensajes</h1>
-                {
-                    messages.map((m,ind) => (
-                        <Message key={ind} message={m} />
-                    ))
-                    
-                }
+            <div className="input-container">
+                <input
+                    type="text"
+                    placeholder="From..."
+                    value={sender}
+                    onChange={(e) => setSender(e.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder="To..."
+                    value={to}
+                    onChange={(e) => setTo(e.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder="Message..."
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                />
+                <button onClick={handleSend}>Enviar</button>
             </div>
-        </>
+        </div>
     );
 }
 

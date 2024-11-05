@@ -1,5 +1,5 @@
 import { createBrowserRouter, createRoutesFromElements } from "react-router-dom";
-import Chat from "../components/Chat";
+import Chat from "../pages/Chat";
 import RegisterPage from "../pages/RegisterPage";
 import Authenticator from "../components/Authenticator";
 

@@ -3,15 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Chat from './components/Chat';
-import { RouterProvider } from 'react-router-dom';
-import { routes } from "./router/Router"
+import { ThemeProvider } from './theme/ThemeProvider';
+import Chat from './pages/Chat';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <RouterProvider router={routes} />
-  </React.StrictMode>
+  <ThemeProvider>
+    <Chat />
+  </ThemeProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
